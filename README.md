@@ -18,41 +18,35 @@ npm install fake-current-time
 
 This example shows integration with React Router framework mode. The key concept is:
 
-- **Server**: Parse offset from cookie and wrap rendering with `runner.run(offset, ...)`
+- **Server**: Parse offset from cookie and wrap request handling with `runner.run(offset, ...)`
 - **Client**: Call `setup()` to initialize time manipulation
 - **UI**: Use `setOffset()` and `clearOffset()` to control time via cookie
 
-### Server Entry (`entry.server.tsx`)
+### Server Entry (Express with React Router)
 
 ```typescript
-import type { AppLoadContext, EntryContext } from "react-router";
+import express from "express";
+import { createRequestHandler } from "@react-router/express";
 import { setup, parseOffsetFromCookie } from "fake-current-time/node";
+
+const app = express();
 
 // Do NOT setup in production
 const runner = process.env.STAGE !== "production" ? setup() : null;
 
-export default function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  routerContext: EntryContext,
-  loadContext: AppLoadContext,
-) {
-  const offset = runner
-    ? parseOffsetFromCookie(request.headers.get("Cookie") || "")
-    : undefined;
+app.all(
+  "*",
+  (req, _, next) => {
+    const offset = runner
+      ? parseOffsetFromCookie(req.headers.cookie || "")
+      : undefined;
 
-  const render = () => {
-    return new Promise((resolve, reject) => {
-      // ...
-      const { pipe, abort } = renderToPipeableStream(/* ... */, {
-        // ...
-      });
-    });
-  };
-
-  return offset && runner ? runner.run(offset, render) : render();
-}
+    return offset && runner ? runner.run(offset, next) : next();
+  },
+  createRequestHandler({
+    // ...
+  }),
+);
 ```
 
 ### Client Entry (`entry.client.tsx`)
