@@ -87,3 +87,14 @@ export function TimeControl() {
 ```
 
 `setOffset` accepts: `years`, `months`, `days`, `hours`, `minutes`, `seconds`, `milliseconds`
+
+### Accessing the Original Date
+
+If you need to access the real `Date` while time manipulation is active, use `OriginalDate`:
+
+```typescript
+import { OriginalDate } from "fake-current-time";
+
+const realNow = OriginalDate.now();
+const realDate = new OriginalDate();
+```

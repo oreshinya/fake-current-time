@@ -8,14 +8,16 @@ export interface TimeOffset {
   milliseconds?: number;
 }
 
-export function setupDateProxy(getOffset: () => TimeOffset | undefined): void {
-  const OriginalDate = globalThis.Date;
+export const OriginalDate: DateConstructor = globalThis.Date;
 
-  const DateProxy = new Proxy(OriginalDate, {
+export function setupDateProxy(getOffset: () => TimeOffset | undefined): void {
+  const DateCtor = globalThis.Date;
+
+  const DateProxy = new Proxy(DateCtor, {
     construct(target, args, newTarget) {
       const offset = getOffset();
       if (offset && args.length === 0) {
-        const t = fakeCurrentTime(OriginalDate, offset);
+        const t = fakeCurrentTime(DateCtor, offset);
         return Reflect.construct(target, [t], newTarget);
       }
       return Reflect.construct(target, args, newTarget);
@@ -25,7 +27,7 @@ export function setupDateProxy(getOffset: () => TimeOffset | undefined): void {
       if (prop === "now") {
         const offset = getOffset();
         if (offset) {
-          return () => fakeCurrentTime(OriginalDate, offset);
+          return () => fakeCurrentTime(DateCtor, offset);
         }
       }
       return Reflect.get(target, prop, receiver);
@@ -34,8 +36,8 @@ export function setupDateProxy(getOffset: () => TimeOffset | undefined): void {
     apply(target, thisArg, args) {
       const offset = getOffset();
       if (offset && args.length === 0) {
-        const t = fakeCurrentTime(OriginalDate, offset);
-        return new OriginalDate(t).toString();
+        const t = fakeCurrentTime(DateCtor, offset);
+        return new DateCtor(t).toString();
       }
       return Reflect.apply(target, thisArg, args);
     },
