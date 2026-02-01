@@ -52,11 +52,6 @@ function formatCurrentOffset(offset: TimeOffset | undefined): string {
     }
   }
 
-  if (offset.milliseconds !== undefined && offset.milliseconds !== 0) {
-    const sign = offset.milliseconds > 0 ? "+" : "";
-    parts.push(`${sign}${offset.milliseconds} milliseconds`);
-  }
-
   return parts.length > 0 ? parts.join(", ") : "None";
 }
 
@@ -115,6 +110,7 @@ export function FakeTimeController(): JSX.Element {
       <TimeDisplay
         label="Current Time (with offset applied)"
         time={currentTime}
+        variant="current"
       />
       <TimeDisplay
         label="Real Time (original)"
@@ -166,14 +162,10 @@ export function FakeTimeController(): JSX.Element {
 interface TimeDisplayProps {
   label: string;
   time: Date | null;
-  variant?: "current" | "real";
+  variant: "current" | "real";
 }
 
-function TimeDisplay({
-  label,
-  time,
-  variant = "current",
-}: TimeDisplayProps): JSX.Element {
+function TimeDisplay({ label, time, variant }: TimeDisplayProps): JSX.Element {
   const variantStyles = styles.timeDisplay[variant];
 
   return (
