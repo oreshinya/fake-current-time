@@ -1,6 +1,6 @@
 {
   "name": "fake-current-time",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Manipulate current time in your application for development and staging environments",
   "keywords": [
     "time",
