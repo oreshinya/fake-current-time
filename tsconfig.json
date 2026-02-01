@@ -5,6 +5,7 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "types": ["node"],
+    "jsx": "react-jsx",
     "declaration": true,
     "isolatedDeclarations": true,
     "isolatedModules": true,

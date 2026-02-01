@@ -6,6 +6,7 @@ export default defineConfig([
       './src/index.ts',
       './src/node.ts',
       './src/browser.ts',
+      './src/react.tsx',
     ],
     clean: true,
     format: ['esm'],

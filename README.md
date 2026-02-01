@@ -68,25 +68,15 @@ startTransition(() => {
 ### UI Component
 
 ```typescript
-import { setOffset, clearOffset } from "fake-current-time/browser";
+import { FakeTimeController } from "fake-current-time/react";
 
 // Restrict access to this page in production (e.g., via routing or middleware)
-export function TimeControl() {
-  return (
-    <div>
-      <p>Current: {new Date().toString()}</p>
-      {/* setOffset saves to cookie and reloads the page */}
-      <button onClick={() => setOffset({ days: 1 })}>+1 Day</button>
-      <button onClick={() => setOffset({ days: -1 })}>-1 Day</button>
-      <button onClick={() => setOffset({ months: 3, days: 7 })}>+3 Months +7 Days</button>
-      {/* clearOffset removes cookie and reloads the page */}
-      <button onClick={clearOffset}>Reset</button>
-    </div>
-  );
+export function TimeControlPage() {
+  return <FakeTimeController />;
 }
 ```
 
-`setOffset` accepts: `years`, `months`, `days`, `hours`, `minutes`, `seconds`, `milliseconds`
+![FakeTimeController UI](./ui.png)
 
 ### Accessing the Original Date
 
