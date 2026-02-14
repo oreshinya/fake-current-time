@@ -64,28 +64,32 @@ export function FakeTimeController(): JSX.Element {
     minutes: "",
     seconds: "",
   });
-  const [currentTime, setCurrentTime] = useState<Date | null>(null);
-  const [realTime, setRealTime] = useState<Date | null>(null);
+  const [timeState, setTimeState] = useState<{
+    currentTime: Date | null;
+    realTime: Date | null;
+    currentOffset: TimeOffset | undefined;
+  }>({ currentTime: null, realTime: null, currentOffset: undefined });
 
   useEffect(() => {
-    setCurrentTime(new Date());
-    setRealTime(new OriginalDate());
+    const update = () =>
+      setTimeState({
+        currentTime: new Date(),
+        realTime: new OriginalDate(),
+        currentOffset: getCurrentOffset(),
+      });
 
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-      setRealTime(new OriginalDate());
-    }, 1000);
+    update();
+    const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  const currentOffset = getCurrentOffset();
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleApply = () => {
+  const handleApply = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const offset: TimeOffset = {};
 
     for (const field of FIELDS) {
@@ -109,29 +113,30 @@ export function FakeTimeController(): JSX.Element {
 
       <TimeDisplay
         label="Current Time (with offset applied)"
-        time={currentTime}
+        time={timeState.currentTime}
         variant="current"
       />
       <TimeDisplay
         label="Real Time (original)"
-        time={realTime}
+        time={timeState.realTime}
         variant="real"
       />
 
       <div style={styles.offset.container}>
         <span style={styles.offset.label}>Current offset:</span>
         <span style={styles.offset.value}>
-          {formatCurrentOffset(currentOffset)}
+          {formatCurrentOffset(timeState.currentOffset)}
         </span>
       </div>
 
-      <form action={handleApply}>
+      <form onSubmit={handleApply}>
         <div style={styles.form.fieldGroup}>
           {FIELDS.map((field) => (
             <label key={field} style={styles.form.field}>
               <span style={styles.form.label}>{FIELD_LABELS[field]}</span>
               <input
                 type="number"
+                step="1"
                 name={field}
                 value={values[field]}
                 onChange={handleFieldChange}
