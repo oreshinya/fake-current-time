@@ -11,7 +11,11 @@ export default defineConfig([
     clean: true,
     format: ['esm'],
     minify: false,
-    dts: true,
+    dts: {
+      compilerOptions: {
+        ignoreDeprecations: '6.0',
+      },
+    },
     outDir: './dist',
   },
 ]);
