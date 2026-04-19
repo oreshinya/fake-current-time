@@ -54,7 +54,7 @@
     "lint:ci": "biome ci ./src",
     "lint:fix": "biome check --write ./src",
     "test": "vitest run",
-    "build": "tsup"
+    "build": "tsdown"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
@@ -62,7 +62,7 @@
     "@types/react": "^19.2.14",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.21.9",
     "typescript": "^6.0.3",
     "vitest": "^4.1.4"
   },

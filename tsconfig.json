@@ -3,7 +3,6 @@
     "src"
   ],
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
     "lib": ["esnext", "dom"],
     "types": ["node"],
     "jsx": "react-jsx",
