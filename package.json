@@ -57,7 +57,7 @@
     "build": "tsdown"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.13",
+    "@biomejs/biome": "2.4.15",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "react": "^19.2.5",
