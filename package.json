@@ -57,14 +57,14 @@
     "build": "tsdown"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.0",
-    "@types/node": "^26.0.0",
+    "@biomejs/biome": "2.5.4",
+    "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "tsdown": "^0.22.3",
+    "tsdown": "^0.22.9",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@11.13.1+sha512.b2fc7683b8a6525414e7d13e1ba28caaddde96bf66ec540bfaeb7e702b81f3e0be4d1f295edf7f9fe0396740a8dce4509c582ddf79891f4543fea32d37645f25"
 }
