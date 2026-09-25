@@ -57,12 +57,12 @@
     "build": "tsdown"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.4",
-    "@types/node": "^26.1.1",
-    "@types/react": "^19.2.17",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "tsdown": "^0.22.9",
+    "@biomejs/biome": "2.5.14",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.0",
     "vitest": "^5.0.1"
